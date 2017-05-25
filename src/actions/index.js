@@ -5,7 +5,6 @@ const addReminder = (text) => {
     type: ADD_REMINDER,
     text,
   };
-  console.log('addReminder', action);
   return action;
 };
 
