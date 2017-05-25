@@ -6,6 +6,7 @@ const addReminder = (text) => {
     text,
   };
   console.log('addReminder', action);
+  return action;
 };
 
 export default addReminder;
