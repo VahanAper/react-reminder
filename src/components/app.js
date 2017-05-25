@@ -17,6 +17,7 @@ class App extends Component {
   }
 
   render() {
+    console.log('this.props', this.props);
     return (
       <div className="app">
         <div className="title">
@@ -43,4 +44,10 @@ class App extends Component {
   }
 }
 
-export default connect(null, { addReminder })(App);
+function mapStateToProps(state) {
+  return {
+    remiders: state,
+  };
+}
+
+export default connect(mapStateToProps, { addReminder })(App);

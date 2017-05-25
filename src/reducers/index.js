@@ -8,12 +8,9 @@ const reminder = (action) => {
 };
 
 const reminders = (state = [], action) => {
-  let remindersArray = null;
   switch (action.type) {
     case ADD_REMINDER:
-      remindersArray = [...state, reminder(action)];
-      console.log('remindersArray', remindersArray);
-      return remindersArray;
+      return [...state, reminder(action)];
 
     default:
       return state;
