@@ -5,6 +5,7 @@ import moment from 'moment';
 import {
   addReminder,
   deleteReminder,
+  clearReminders,
 } from '../actions';
 
 class App extends Component {
@@ -13,6 +14,7 @@ class App extends Component {
 
     this.handleTextInput = this.handleTextInput.bind(this);
     this.handleDateInput = this.handleDateInput.bind(this);
+    this.clearReminders = this.clearReminders.bind(this);
 
     this.state = {
       text: '',
@@ -27,6 +29,10 @@ class App extends Component {
 
   deleteReminder(id) {
     this.props.deleteReminder(id);
+  }
+
+  clearReminders() {
+    this.props.clearReminders();
   }
 
   handleTextInput(event) {
@@ -97,6 +103,14 @@ class App extends Component {
           </button>
         </div>
         {this.renderReminders()}
+        <div
+          role="button"
+          tabIndex={0}
+          className="btn btn-danger"
+          onClick={this.clearReminders}
+        >
+          Clear All
+        </div>
       </div>
     );
   }
@@ -111,4 +125,5 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps, {
   addReminder,
   deleteReminder,
+  clearReminders,
 })(App);
