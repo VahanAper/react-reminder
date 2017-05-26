@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import {
   addReminder,
@@ -10,17 +11,30 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    this.handleTextInput = this.handleTextInput.bind(this);
+    this.handleDateInput = this.handleDateInput.bind(this);
+
     this.state = {
       text: '',
+      dueDate: '',
     };
   }
 
   addReminder() {
-    this.props.addReminder(this.state.text);
+    const { text, dueDate } = this.state;
+    this.props.addReminder(text, dueDate);
   }
 
   deleteReminder(id) {
     this.props.deleteReminder(id);
+  }
+
+  handleTextInput(event) {
+    this.setState({ text: event.target.value });
+  }
+
+  handleDateInput(event) {
+    this.setState({ dueDate: event.target.value });
   }
 
   renderReminders() {
@@ -31,7 +45,14 @@ class App extends Component {
           reminders.map((reminder) => {
             return (
               <li key={reminder.id} className="list-group-item">
-                <div className="list-item">{reminder.text}</div>
+                <div className="list-item">
+                  <div><strong>{reminder.text}</strong></div>
+                  <div>
+                    <em>
+                      {moment(new Date(reminder.dueDate)).fromNow()}
+                    </em>
+                  </div>
+                </div>
                 <div
                   role="button"
                   tabIndex={0}
@@ -57,9 +78,14 @@ class App extends Component {
         <div className="form-inline form-reminder">
           <div className="form-group">
             <input
-              onChange={event => this.setState({ text: event.target.value })}
+              onChange={this.handleTextInput}
               className="form-control"
               placeholder="I have to ..."
+            />
+            <input
+              onChange={this.handleDateInput}
+              className="form-control"
+              type="datetime-local"
             />
           </div>
           <button
