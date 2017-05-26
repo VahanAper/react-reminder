@@ -2,6 +2,10 @@ import {
   ADD_REMINDER,
   DELETE_REMINDER,
 } from '../constants';
+import {
+  getCookies,
+  bakeCookie,
+} from './cookies';
 
 const reminder = (action) => {
   const { text, dueDate } = action;
@@ -19,13 +23,21 @@ const removeById = (state = [], id) => {
   return reminders;
 };
 
-const reminders = (state = [], action) => {
+const reminders = (state = getCookies('reminders'), action) => {
   switch (action.type) {
-    case ADD_REMINDER:
-      return [...state, reminder(action)];
+    case ADD_REMINDER: {
+      const newReminder = reminder(action);
+      bakeCookie('reminders', newReminder);
 
-    case DELETE_REMINDER:
-      return removeById(state, action.id);
+      return [...state, newReminder];
+    }
+
+    case DELETE_REMINDER: {
+      const newReminders = removeById(state, action.id);
+      bakeCookie('reminders', newReminders);
+
+      return newReminders;
+    }
 
     default:
       return state;
