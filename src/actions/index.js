@@ -1,11 +1,14 @@
-import { ADD_REMINDER } from '../constants';
+import {
+  ADD_REMINDER,
+  DELETE_REMINDER,
+} from '../constants';
 
-const addReminder = (text) => {
-  const action = {
-    type: ADD_REMINDER,
-    text,
-  };
-  return action;
-};
+export const addReminder = text => ({
+  type: ADD_REMINDER,
+  text,
+});
 
-export default addReminder;
+export const deleteReminder = id => ({
+  type: DELETE_REMINDER,
+  id,
+});
